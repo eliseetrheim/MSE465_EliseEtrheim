@@ -11,13 +11,13 @@ It also includes the conda environment used throughout the course.
 ## Repository Structure
 MSE465_Elise Etrheim/
 
-├── environment.yml        # Conda environment for the course
-
-├── notes/                 # Lecture notes, summaries, examples
-
 ├── assignments/           # Homework, problem sets, project files
 
 ├── practice/              # Extra exercises, experiments, scratch work
+
+├── .gitignore/
+
+├── environment.yml        # Conda environment for the course
 
 └── README.md              # You are here
 
