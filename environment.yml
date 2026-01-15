@@ -2,10 +2,10 @@ name: matsci465
 channels:
   - conda-forge
 dependencies:
-  - python>=3.10
+  - python=3.10.19
   - jupyterlab
-  - numpy
-  - scipy
-  - matplotlib
-  - hyperspy
-  - py4dstem
+  - numpy=2.2.6
+  - scipy=1.15.2
+  - matplotlib=3.10.8
+  - hyperspy=2.3.0
+  - py4dstem=0.14.16
