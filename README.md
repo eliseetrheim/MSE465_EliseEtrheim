@@ -15,6 +15,8 @@ MSE465_Elise Etrheim/
 
 ├── practice/              # Extra exercises, experiments, scratch work
 
+├── example_code/          # Example data, images, and code
+
 ├── .gitignore/
 
 ├── environment.yml        # Conda environment for the course
