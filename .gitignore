@@ -1,1 +1,2 @@
-.ipynb_checkpoints/"*.dm4" 
+.ipynb_checkpoints
+*.dm4
