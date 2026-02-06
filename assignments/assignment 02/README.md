@@ -1,3 +1,4 @@
+*Revised from 465_Computational_Microscopy_2026 GitHub Repository*
 
 # Week 2: Core Tools for Microscopy Data Analysis
 January 12-16, 2026
@@ -20,6 +21,9 @@ This week focuses on understanding multidimensional data structures in electron 
 - **assignment_02_solutions.ipynb**: Complete solutions with working code
 - **Data**: Si-SiGe.dm4 4D-STEM dataset available in assignments/raw_data/
 - Topics: Axes management, data loading, virtual detectors, visualization
+
+*How do virtual detectors in 4D-STEM enable post-acquisition "re-playing" of the experiment by redefining detector geometry in software?*
+Virtual detectors are post-acquisitional optimizations and modifications applied to the experimental data, allowing the researcher to artificially apply masks, change shape, size, or position of the detector to the stored diffraction pattern without re-running the experiment. 
 
 ## Exercises
 - **exercise_02_hyperspy_basics.ipynb**: Practice with HyperSpy signals, axes, and operations
@@ -45,27 +49,6 @@ Week 2 includes three progressively advanced calibration examples:
   - Common mistakes and how to avoid them
   - Quality metrics and validation strategies
   - Documentation and reproducibility
-
-## Directory Structure
-```
-Week_02/
-├── README.md                              # This file
-├── lectures/                              # Lecture materials and notebooks
-├── code_examples/                         # Example code and scripts
-│   ├── example_01_calibration.ipynb
-│   ├── example_02_bragg_calibration.ipynb
-│   └── example_03_calibration_practices.ipynb
-├── exercises/
-│   ├── exercise_02_hyperspy_basics.ipynb  # HyperSpy practice exercises
-│   └── exercise_02_4dstem_basics.ipynb    # 4D-STEM practice exercises
-├── assignments/
-│   ├── assignment_02_setup.ipynb          # Assignment tasks
-│   ├── assignment_02_solutions.ipynb      # Assignment solutions
-│   └── raw_data/
-│       ├── Si-SiGe.dm4                    # Example dataset
-│       └── Diffraction SI_Au_Calib.dm4    # Au nanoparticle calibration standard
-└── resources/                             # Additional reading and references
-```
 
 ## Key Concepts
 - **Navigation Axes**: Spatial coordinates where measurements are made (x, y scan positions)
