@@ -1,71 +1,94 @@
-*Revised from 465_Computational_Microscopy_2026 GitHub Repository*
 
-# Week 2: Core Tools for Microscopy Data Analysis
-January 12-16, 2026
+# Assignment 02: 4D-STEM Foundations  
+Based on Week 02 Content (January 12–16, 2026)
+
+---
 
 ## Overview
-This week focuses on understanding multidimensional data structures in electron microscopy, with particular emphasis on 4D-STEM data. Students will learn to distinguish between navigation and signal axes, work with 4D datasets, and implement virtual detector reconstructions.
 
-## Monday: Introduction to 4D-STEM Data Structures
-- Distinguishing Navigation vs. Signal Axes
-- Loading and calibrating 4D-STEM datasets
-- Basic data inspection and metadata handling
+This assignment explores the structure and analysis of 4D-STEM datasets, with emphasis on distinguishing navigation and signal axes, performing reciprocal-space calibration, and reconstructing virtual detector images.
 
-## Wednesday: Virtual Detectors and Post-Acquisition Imaging
-- Virtual Bright Field (BF) and Annular Dark Field (ADF) reconstruction
-- Center of Mass (CoM) correction for beam alignment
-- Publication-quality visualization with scale bars and colormaps
+A 4D-STEM dataset consists of a 2D scan grid (navigation space) where a full diffraction pattern (signal space) is recorded at each probe position. Because the complete diffraction information is stored, detector signals can be defined and redefined after acquisition through virtual detector masks.
 
-## Assignment 2: 4D-STEM Foundations
-- **assignment_02_setup.ipynb**: Assignment tasks and empty code cells
-- **assignment_02_solutions.ipynb**: Complete solutions with working code
-- **Data**: Si-SiGe.dm4 4D-STEM dataset available in assignments/raw_data/
-- Topics: Axes management, data loading, virtual detectors, visualization
+This assignment develops a structured analysis framework to:
 
-*How do virtual detectors in 4D-STEM enable post-acquisition "re-playing" of the experiment by redefining detector geometry in software?*
-Virtual detectors are post-acquisitional optimizations and modifications applied to the experimental data, allowing the researcher to artificially apply masks, change shape, size, or position of the detector to the stored diffraction pattern without re-running the experiment. 
+- Normalize and verify 4D data axis ordering  
+- Apply global Center of Mass (CoM) beam correction  
+- Implement virtual Bright Field (BF) and Annular Dark Field (ADF) detectors  
+- Compute diffraction statistics (total intensity, CoM maps, radial profiles)  
+- Apply the full pipeline to a real Si/SiGe dataset  
+- Generate publication-quality figures with calibrated scale bars  
 
-## Exercises
-- **exercise_02_hyperspy_basics.ipynb**: Practice with HyperSpy signals, axes, and operations
-- **exercise_02_4dstem_basics.ipynb**: Hands-on 4D-STEM data creation, virtual detectors, and calibration
+---
 
-## Code Examples
-Week 2 includes three progressively advanced calibration examples:
+## Virtual Detectors and “Re-Playing” the Experiment
 
-- **example_01_calibration.ipynb**: Basic calibration workflow with Si-SiGe dataset
-  - Loading 4D-STEM data with py4DSTEM
-  - Extracting and visualizing diffraction patterns
-  - Computing virtual images (BF, ADF)
-  - Basic origin and pixelsize calibration
+In conventional STEM, detector geometry is physically fixed during acquisition. In contrast, 4D-STEM records the *entire diffraction pattern* at every probe position. This allows the experiment to be effectively “re-played” in software by redefining detector geometry after the fact.
 
-- **example_02_bragg_calibration.ipynb**: Advanced calibration using Bragg spots from **Au nanoparticles**
-  - Radial averaging for robust peak detection
-  - Using multiple reflections (Au 111, 220) for calibration
-  - Reference material: Au nanoparticles (standard calibration sample)
-  - Reciprocal-space calibration validation
+Virtual detectors are software-defined masks applied to the stored diffraction patterns. By modifying the mask shape, size, or angular range, one can reconstruct different detector responses without re-collecting data.
 
-- **example_03_calibration_practices.ipynb**: Best practices and troubleshooting
-  - Systematic calibration workflow with Au references
-  - Common mistakes and how to avoid them
-  - Quality metrics and validation strategies
-  - Documentation and reproducibility
+This enables:
 
-## Key Concepts
-- **Navigation Axes**: Spatial coordinates where measurements are made (x, y scan positions)
-- **Signal Axes**: Data measured at each navigation point (diffraction patterns, spectra)
-- **Virtual Detectors**: Post-acquisition image formation from diffraction data
-- **Bragg Calibration**: Using crystallographic reflections for precise detector calibration
-- **Reference Materials**: Au nanoparticles, Si, MoS₂ (well-characterized standards)
-- **Reciprocal Space**: Calibration in units of 1/nm for diffraction patterns
-- **4D-STEM**: Four-dimensional scanning transmission electron microscopy data
+- Direct comparison of BF and ADF contrast from the same dataset  
+- Optimization of detector geometry for specific microstructural features  
+- Post-acquisition exploration of reciprocal-space scattering behavior  
 
-## Learning Objectives
-By the end of this week, students should be able to:
-1. Explain the difference between navigation and signal axes in multidimensional data
-2. Load and calibrate 4D-STEM datasets using py4DSTEM
-3. Implement virtual detector reconstructions (BF, ADF)
-4. Create publication-quality visualizations of microscopy data
-5. Understand how virtual detectors enable flexible post-acquisition imaging
-6. Use Bragg reflections for precise detector and reciprocal-space calibration
-7. Validate calibration using reference materials (Au nanoparticles)
-8. Apply best practices for reproducible and documented calibration workflows
+### Bright Field (BF) Contrast
+
+Virtual BF detectors collect intensity near the transmitted beam. Contrast in BF images is often dominated by diffraction contrast, strain, and phase-related effects. BF imaging is sensitive to crystal orientation and local lattice variations.
+
+### Annular Dark Field (ADF) Contrast
+
+Virtual ADF detectors collect high-angle scattered electrons. At sufficiently high angles, ADF intensity scales approximately with atomic number (Z), producing so-called *Z-contrast*. This makes ADF imaging particularly useful for distinguishing compositional variations, such as the Si/SiGe interface analyzed in this assignment.
+
+---
+
+## Repository Structure
+
+### `assignment_02_framework.ipynb`
+Primary notebook containing:
+
+- Virtual detector definitions  
+- CoM correction implementation  
+- Diffraction statistics functions  
+- Structured `run_pipeline()` workflow  
+- Application to the Si/SiGe dataset  
+- Automated generation of calibrated figures  
+
+This notebook represents the finalized and organized analysis framework.
+
+---
+
+### `assignment_02_setup.ipynb`
+Exploratory notebook used to:
+
+- Inspect raw 4D-STEM datasets  
+- Validate axis ordering  
+- Extract calibration metadata  
+- Prototype CoM correction  
+- Generate preliminary visualizations  
+
+This notebook informed the design of the structured pipeline implemented in `assignment_02_framework.ipynb`.
+
+---
+
+### `assignment_02_output/`
+Directory containing figures generated by the analysis pipeline, including:
+
+- Virtual BF and ADF images  
+- Calibrated real-space intensity maps  
+- Radial intensity profiles  
+- Interface line profile plots  
+
+All figures are saved as PNG files with descriptive titles, scale bars, and appropriate color maps. Additional plots, including those for validation of workflow, interactive plots for data exploration, and an interface line profile plot can be found in 'assignment_02_framework.ipynb'.
+
+---
+
+### `virtual_adf_figure_sisige.png`
+A preliminary ADF figure generated during exploratory analysis in `assignment_02_setup.ipynb`.
+
+---
+
+## Summary
+
+This assignment demonstrates how 4D-STEM data enables flexible, post-acquisition detector definition and structured diffraction analysis. By separating exploratory setup work from a formalized analysis pipeline, the workflow ensures reproducibility, clarity, and extensibility for future datasets.
