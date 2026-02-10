@@ -1,11 +1,19 @@
 name: matsci465
 channels:
   - conda-forge
+
 dependencies:
   - python=3.10.19
   - jupyterlab
   - numpy=2.2.6
   - scipy=1.15.2
   - matplotlib=3.10.8
+  - pandas
+  - seaborn
+  - scikit-image
+  - scikit-learn
   - hyperspy=2.3.0
   - py4dstem=0.14.16
+  - pip
+  - pip:
+      - tensorflow==2.20.0
