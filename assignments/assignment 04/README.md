@@ -1,0 +1,112 @@
+
+# Assignment 04: 4D-STEM Foundations  
+Based on Week 03-4 Content
+
+---
+
+## Overview
+
+This assignment develops and compares multiple computational approaches for particle segmentation and characterization in TEM images. The workflow progresses from classical image processing to feature-based machine learning and finally to deep learning segmentation.
+
+The objectives of this assignment are to: 
+
+- Implement a reproducible classical segmentation pipeline
+- Extract region-level morphological and texture features
+- Train supervised and unsupervised machine learning models
+- Develop CNN and U-Net architectures for classification and segmentation
+- Compare performance across methodological approaches
+- General publication-quality summary figures
+
+This assignment emphasizes methodological progression: from rule-based segmentation to learned feature representations and fully data-driven deep learning models. 
+
+---
+
+## Classical Segmentation Pipeline
+
+The classical workflow applies standard image processing techniques to identify particle regions: 
+
+- Median filtering for noise reduction
+- Otsu thresholding for global intensity segmentation
+- Watershed refinement for separating touching particles
+- Feature extraction using regionprops
+
+CLAHE contrast enhancement was evaluated but ultimately excluded from the final workflow because it amplified background speckle and increased over-segmentation.
+
+The output of this stage is a structured dataset (classical_results.csv) containing region-level morphological and intensity descriptors. 
+ 
+
+### Feature-Based Machine Learning
+
+Region-level features were computed for 1,012 segmented regions across 100 images. These include:
+
+- Morphological descriptors (area, perimeter, equivalent diameter, eccentricity, solidity, circularity)
+- Intensity statistics
+- Edge-based features (Sobel, Canny)
+- Texture features (Local Binary Patterns)
+- Blob-response features (Laplacian of Gaussian)
+
+After scaling and correlation filtering, the seven most informative features were selected using Random Forest importance ranking.
+
+#### Supervised Classification
+Regions were labeled as small vs. large particles using median equivalent diameter (45.72 px) as a threshold.
+
+Model performance: 
+- SVM F1-score: 0.96
+- Random Forest F1-score: 1.00
+
+These results indicate strong separability of particle size classes using hand-crafted features.
+
+#### Unsupervised Clustering
+k-means clustering was applied to the selected feature space. 
+- Optimal clusters: k = 3
+- Silhouette score: 0.26
+
+Clustering revealed moderate but interpretable structure within the feature space. 
+
+Results from this stage are summarized in ml_results.csv.
+
+### Deep Learning Approaches
+#### CNN Classification
+A convolutional neural network was trained for binary image classification. Data augmentation was applied to increase robustness and reduce overfitting. Performance was evaluated using confusion matrices and F1-score metrics.
+
+#### U-Net Segmentation
+A U-Net architecture was trained using pixel-level annotated masks stored in raw_masks/.
+
+Segmentation performance (validation set):
+- Dice coefficient: 0.84
+- IoU: 0.72
+
+A probability threshold of 0.2 was selected based on validation performance, as the model produced conservative probability outputs at the default 0.5 threshold.
+
+Deep learning segmentation demonstrated strong region identification while reducing reliance on manually defined thresholding rules.
+
+---
+
+## Repository Structure
+
+assignment_04/
+│
+├── raw_data/                  # Provided dataset
+├── raw_masks/                 # Pixel-level annotation masks for U-Net
+│
+├── assignment_04_output/      # Generated results and figures
+│   ├── classical_results.csv
+│   ├── ml_results.csv
+│   ├── snr_summary.csv
+│   ├── complete_analysis_3x3.png
+│   ├── unet_3x3_panel.png
+│   └── ...
+│
+├── assignment_04_final.ipynb  # Final reproducible workflow
+├── assignment_04_scratch.ipynb # Exploratory development notebook
+└── README.md
+
+---
+
+## Summary
+
+This assignment demonstrates a progression from classical rule-based segmentation to feature-engineered machine learning and finally to deep learning-based segmentation.
+
+Classical methods provide interpretable and computationally efficient segmentation but rely on fixed threshold assumptions. Feature-based machine learning enables robust region classification with high accuracy, while deep learning models learn segmentation directly from annotated data and achieve strong overlap metrics.
+
+By separating exploratory work from the finalized pipeline, the workflow emphasizes clarity, reproducibility, and methodological comparison.
