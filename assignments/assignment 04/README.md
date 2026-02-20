@@ -51,7 +51,7 @@ Region-level features were computed for 1,012 segmented regions across 100 image
 
 After scaling and correlation filtering, the seven most informative features were selected using Random Forest importance ranking.
 
-**Supervised Classification**
+### Supervised Classification
 
 Regions were labeled as small vs. large particles using the median equivalent diameter (45.72 px) as a threshold.
 
@@ -62,7 +62,7 @@ Model performance:
 
 These results indicate strong separability of particle size classes using hand-crafted features.
 
-**Unsupervised Clustering**
+### Unsupervised Clustering
 
 k-means clustering was applied to the selected feature space.
 
@@ -79,13 +79,13 @@ Results from this stage are summarized in:
 
 ## Deep Learning Approaches
 
-**CNN Classification**
+### CNN Classification
 
 A convolutional neural network was trained for binary image classification. Data augmentation was applied to increase robustness and reduce overfitting. Performance was evaluated using confusion matrices and F1-score metrics.
 
 
 
-**U-Net Segmentation**
+### U-Net Segmentation
 
 A U-Net architecture was trained using pixel-level annotated masks stored in raw\_masks/.
 
@@ -97,6 +97,30 @@ Validation performance:
 A probability threshold of 0.2 was selected based on validation Dice performance, as the model produced conservative probability outputs at the default 0.5 threshold.
 
 Deep learning segmentation demonstrated strong region identification while reducing reliance on manually defined thresholding rules.
+
+--- 
+
+## Recommended Use-Cases
+
+Based on performance and implementation complexity:
+
+### Classical Methods: 
+
+- Best for: small datasets, rapid prototyping, interpretable pipelines
+- Advantages: fast, explainable, minimal training required
+- Limitations: sensitive to threshold assumptions and image contrast
+
+### Feature-Based Machine Learning
+
+- Best for: structured region classification with engineered descriptors
+- Advantages: high classification accuracy with interpretable features
+- Limitations: requires feature design and segmentation pre-processing
+
+### Deep Learning (U-Net)
+
+- Best for: automated pixel-level segmentation in large datasets
+- Advantages: learns spatial structure directly from data
+- Limitations: requires annotated masks and training time
 
 ---
 
