@@ -34,8 +34,9 @@ CLAHE contrast enhancement was evaluated but ultimately excluded from the final 
 
 The output of this stage is a structured dataset (classical_results.csv) containing region-level morphological and intensity descriptors. 
  
+---
 
-### Feature-Based Machine Learning
+## Feature-Based Machine Learning
 
 Region-level features were computed for 1,012 segmented regions across 100 images. These include:
 
@@ -46,8 +47,8 @@ Region-level features were computed for 1,012 segmented regions across 100 image
 - Blob-response features (Laplacian of Gaussian)
 
 After scaling and correlation filtering, the seven most informative features were selected using Random Forest importance ranking.
-
-#### Supervised Classification
+-
+### Supervised Classification
 Regions were labeled as small vs. large particles using median equivalent diameter (45.72 px) as a threshold.
 
 Model performance: 
@@ -55,8 +56,8 @@ Model performance:
 - Random Forest F1-score: 1.00
 
 These results indicate strong separability of particle size classes using hand-crafted features.
-
-#### Unsupervised Clustering
+-
+### Unsupervised Clustering
 k-means clustering was applied to the selected feature space. 
 - Optimal clusters: k = 3
 - Silhouette score: 0.26
@@ -65,11 +66,14 @@ Clustering revealed moderate but interpretable structure within the feature spac
 
 Results from this stage are summarized in ml_results.csv.
 
-### Deep Learning Approaches
-#### CNN Classification
-A convolutional neural network was trained for binary image classification. Data augmentation was applied to increase robustness and reduce overfitting. Performance was evaluated using confusion matrices and F1-score metrics.
+---
 
-#### U-Net Segmentation
+## Deep Learning Approaches
+-
+### CNN Classification
+A convolutional neural network was trained for binary image classification. Data augmentation was applied to increase robustness and reduce overfitting. Performance was evaluated using confusion matrices and F1-score metrics.
+-
+### U-Net Segmentation
 A U-Net architecture was trained using pixel-level annotated masks stored in raw_masks/.
 
 Segmentation performance (validation set):
