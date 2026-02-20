@@ -2,19 +2,20 @@
 
 Based on Week 03–04 Content
 
---- 
+---
 
 ## Overview
 
 This assignment develops and compares multiple computational approaches for particle segmentation and characterization in transmission electron microscopy (TEM) images. The workflow progresses from classical image processing to feature-based machine learning and finally to deep learning segmentation.
 
 The objectives of this assignment are to:
-- Implement a reproducible classical segmentation pipeline
-- Extract region-level morphological and texture features
-- Train supervised and unsupervised machine learning models
-- Develop CNN and U-Net architectures for classification and segmentation
-- Compare performance across methodological approaches
-- Generate publication-quality summary figures
+
+* Implement a reproducible classical segmentation pipeline
+* Extract region-level morphological and texture features
+* Train supervised and unsupervised machine learning models
+* Develop CNN and U-Net architectures for classification and segmentation
+* Compare performance across methodological approaches
+* Generate publication-quality summary figures
 
 This assignment emphasizes methodological progression: from rule-based segmentation to learned feature representations and fully data-driven deep learning models.
 
@@ -23,27 +24,30 @@ This assignment emphasizes methodological progression: from rule-based segmentat
 ## Classical Segmentation Pipeline
 
 The classical workflow applies standard image processing techniques to identify particle regions:
-- Median filtering for noise reduction
-- Otsu thresholding for global intensity segmentation
-- Watershed refinement for separating touching particles
-- Feature extraction using regionprops
+
+* Median filtering for noise reduction
+* Otsu thresholding for global intensity segmentation
+* Watershed refinement for separating touching particles
+* Feature extraction using regionprops
 
 CLAHE contrast enhancement was evaluated but ultimately excluded from the final workflow because it amplified background speckle and increased over-segmentation.
 
 The output of this stage is a structured dataset:
-- classical_results.csv 
-containing region-level morphological and intensity descriptors.
+
+* classical\_results.csv
+  containing region-level morphological and intensity descriptors.
 
 ---
 
 ## Feature-Based Machine Learning
 
 Region-level features were computed for 1,012 segmented regions across 100 images. These include:
-- Morphological descriptors (area, perimeter, equivalent diameter, eccentricity, solidity, circularity)
-- Intensity statistics
-- Edge-based features (Sobel, Canny)
-- Texture features (Local Binary Patterns)
-- Blob-response features (Laplacian of Gaussian)
+
+* Morphological descriptors (area, perimeter, equivalent diameter, eccentricity, solidity, circularity)
+* Intensity statistics
+* Edge-based features (Sobel, Canny)
+* Texture features (Local Binary Patterns)
+* Blob-response features (Laplacian of Gaussian)
 
 After scaling and correlation filtering, the seven most informative features were selected using Random Forest importance ranking.
 
@@ -52,8 +56,9 @@ After scaling and correlation filtering, the seven most informative features wer
 Regions were labeled as small vs. large particles using the median equivalent diameter (45.72 px) as a threshold.
 
 Model performance:
-- SVM F1-score: 0.96
-- Random Forest F1-score: 1.00
+
+* SVM F1-score: 0.96
+* Random Forest F1-score: 1.00
 
 These results indicate strong separability of particle size classes using hand-crafted features.
 
@@ -61,13 +66,14 @@ These results indicate strong separability of particle size classes using hand-c
 
 k-means clustering was applied to the selected feature space.
 
-- Optimal clusters: k = 3
-- Silhouette score: 0.26
+* Optimal clusters: k = 3
+* Silhouette score: 0.26
 
 Clustering revealed moderate but interpretable structure within the feature space.
 
 Results from this stage are summarized in:
-- ml_results.csv
+
+* ml\_results.csv
 
 ---
 
@@ -78,13 +84,15 @@ Results from this stage are summarized in:
 A convolutional neural network was trained for binary image classification. Data augmentation was applied to increase robustness and reduce overfitting. Performance was evaluated using confusion matrices and F1-score metrics.
 
 
+
 **U-Net Segmentation**
 
-A U-Net architecture was trained using pixel-level annotated masks stored in raw_masks/.
+A U-Net architecture was trained using pixel-level annotated masks stored in raw\_masks/.
 
 Validation performance:
-- Dice coefficient: 0.84
-- IoU: 0.72
+
+* Dice coefficient: 0.84
+* IoU: 0.72
 
 A probability threshold of 0.2 was selected based on validation Dice performance, as the model produced conservative probability outputs at the default 0.5 threshold.
 
@@ -94,41 +102,49 @@ Deep learning segmentation demonstrated strong region identification while reduc
 
 ## Repository Structure
 
-**assignment_04_final.ipynb**
+### assignment\_04\_final.ipynb
+
 Primary notebook containing:
-- Classical segmentation workflow
-- Feature extraction and machine learning models
-- CNN and U-Net training
-- Performance evaluation
-- Final summary figure generation
+
+* Classical segmentation workflow
+* Feature extraction and machine learning models
+* CNN and U-Net training
+* Performance evaluation
+* Final summary figure generation
 
 This notebook represents the finalized and organized analysis pipeline.
 
-**assignment_04_scratch.ipynb**
+### assignment\_04\_scratch.ipynb
+
 Exploratory notebook used to:
-- Inspect raw TEM images
-- Prototype segmentation parameters
-- Validate feature extraction
-- Test model configurations
-- Experiment with threshold calibration
 
-This notebook informed the design of the structured pipeline implemented in assignment_04_final.ipynb.
+* Inspect raw TEM images
+* Prototype segmentation parameters
+* Validate feature extraction
+* Test model configurations
+* Experiment with threshold calibration
 
-**assignment_04_output/**
+This notebook informed the design of the structured pipeline implemented in assignment\_04\_final.ipynb.
+
+### assignment\_04\_output/
+
 Directory containing figures and data generated by the analysis pipeline, including:
-- classical_results.csv
-- ml_results.csv
-- snr_summary.csv
-- complete_analysis_3x3.png
-- unet_3x3_panel.png
-- Additional intermediate visualizations
+
+* classical\_results.csv
+* ml\_results.csv
+* snr\_summary.csv
+* complete\_analysis\_3x3.png
+* unet\_3x3\_panel.png
+* Additional intermediate visualizations
 
 All figures are saved as PNG files with descriptive titles.
 
-**raw_data/**
+### raw\_data/
+
 Provided TEM dataset used for all analysis.
 
-**raw_masks/**
+### raw\_masks/
+
 Pixel-level annotation masks used for U-Net training and validation.
 
 ---
@@ -138,3 +154,4 @@ Pixel-level annotation masks used for U-Net training and validation.
 This assignment demonstrates a progression from classical rule-based segmentation to feature-engineered machine learning and finally to deep learning-based segmentation.
 
 Classical methods provide interpretable and computationally efficient region identification but rely on fixed threshold assumptions. Feature-based machine learning enables highly accurate region classification using structured descriptors. Deep learning models learn segmentation directly from annotated data and achieve strong overlap metrics.
+
